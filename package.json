@@ -1,0 +1,37 @@
+{
+  "name": "wkr-auth-mock",
+  "version": "0.1.0",
+  "description": "Kinda mocks the wkr auth service, but mostly just allows for generating JWTs and verifying them against a JWKS endpoint.",
+  "scripts": {
+    "watch": "esw --watch --color ./app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cullylarson/wkr-auth-mock.git"
+  },
+  "author": "Cully Larson <cully.larson@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cullylarson/wkr-auth-mock/issues"
+  },
+  "homepage": "https://github.com/cullylarson/wkr-auth-mock#readme",
+  "bin": {
+    "wkr-auth-mock": "./app/cli.js"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-watch": "^6.0.0",
+    "standard": "^13.1.0"
+  },
+  "dependencies": {
+    "@cullylarson/f": "^0.1.1",
+    "base64url": "^3.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "node-forge": "^0.8.5",
+    "node-rsa": "^1.0.5",
+    "yargs": "^13.3.0"
+  }
+}
