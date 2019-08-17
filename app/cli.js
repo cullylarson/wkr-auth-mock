@@ -18,7 +18,7 @@ const argv = require('yargs')
 const port = argv.p
 const claimsNamespace = argv.c
 const issuer = 'wkr-auth-mock'
-const {publicKey, privateKey} = readKeys('./keys/public_key.pem', './keys/private_key.pem')
+const {publicKey, privateKey} = readKeys(path.join(__dirname, 'keys/public_key.pem'), path.join(__dirname, 'keys/private_key.pem'))
 const secrets = getCertAndKeys(issuer, publicKey, privateKey)
 const jwksKey = {
     alg: 'RSA256',
@@ -48,7 +48,7 @@ app.post('/jwt', (req, res) => {
     const lasts = get('lasts', 3600, req.body)
 
     signAccountJwt(account, permissions, roles, groups, lasts, {
-        privateKey: secrets.pair.private,
+        privateKey: secrets.pair.priv,
         kid: secrets.cert.kid,
         issuer,
         audience: issuer,
@@ -62,7 +62,7 @@ app.post('/jwt', (req, res) => {
         })
 })
 
-app.get('jwks.json', (req, res) => {
+app.get('/jwks.json', (req, res) => {
     res.json({
         keys: [
             jwksKey,

@@ -4,7 +4,6 @@ const forge = require('node-forge')
 const NodeRSA = require('node-rsa')
 const {sign} = require('jsonwebtoken')
 const base64url = require('base64url')
-const {pick} = require('@cullylarson/f')
 
 const readKeys = (publicKeyPath, privateKeyPath) => {
     let publicKeyPem
@@ -119,7 +118,7 @@ const signAccountJwt = (account, permissions, roles, groups, expiresIn, {
     return new Promise((resolve, reject) => {
         const payload = {
             [claimsNamespace]: {
-                account: pick(['id', 'name', 'email', 'phone', 'address1', 'address2', 'city', 'state', 'country', 'zip'], account),
+                account,
                 permissions,
                 roles,
                 groups,

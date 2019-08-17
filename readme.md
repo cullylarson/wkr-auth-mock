@@ -12,6 +12,22 @@ Run the linter:
 npm run watch
 ```
 
+### Integration Tests
+
+NOTE: These tests probably only work on macos, since using `gtimeout` and `greadlink` in the `wait-for-it.sh` script.
+
+NOTE: If running on macos, you will need `coreutils` installed.
+
+```
+brew install coreutils
+```
+
+Run integration tests:
+
+```
+npm run test:integration
+```
+
 ## Usage
 
 This command starts up a service running on a specified port. The command is added to npm's bin as `wkr-auth-mock`.

@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "description": "Kinda mocks the wkr auth service, but mostly just allows for generating JWTs and verifying them against a JWKS endpoint.",
   "scripts": {
-    "watch": "esw --watch --color ./app"
+    "start": "./app/cli.js -p 3808 -c 'asdf'",
+    "watch": "esw --watch --color ./app ./tests",
+    "test:integration:do-it": "jest ./tests/integration",
+    "test:integration": "export PORT=3808 CLAIMS_NS='asdf'; ./app/cli.js -p $PORT -c $CLAIMS_NS & export CLI_PID=$!; ./tests/integration/wait-for-it.sh localhost:${PORT} --strict -- npm run test:integration:do-it; kill $CLI_PID"
   },
   "repository": {
     "type": "git",
@@ -20,8 +23,12 @@
   },
   "devDependencies": {
     "eslint": "^6.1.0",
+    "eslint-plugin-jest": "^22.15.1",
     "eslint-watch": "^6.0.0",
-    "standard": "^13.1.0"
+    "jest": "^24.9.0",
+    "jwks-rsa": "^1.6.0",
+    "standard": "^13.1.0",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "@cullylarson/f": "^0.1.1",
