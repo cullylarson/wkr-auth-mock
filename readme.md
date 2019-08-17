@@ -45,6 +45,8 @@ Options:
 
 The service exposes several endpoints.
 
+The issuer and audience for JWTs will be set to: `wkr-auth-mock`
+
 ### `/jwt`
 
 Get a JWT. All provided parameters will be set in the JWT under the claims namespace provided when running the command.
