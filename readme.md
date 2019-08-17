@@ -2,7 +2,7 @@
 
 > Kinda mocks the wkr auth service, but mostly just allows for generating JWTs and verifying them against a JWKS endpoint.
 
-NOTICE: This should not be used in production, or anywhere that is publicly accessible. It uses a hard-coded keys, committed in the repo. Counterfeit JWTs can easily be created by simply looking at the source code of this application. The intended purpose of this application is testing.
+NOTICE: This should not be used in production, or anywhere that is publicly accessible. It uses hard-coded keys, committed in the repo. Counterfeit JWTs can easily be created by simply looking at the source code of this application. The intended purpose of this application is testing.
 
 ## Development
 
