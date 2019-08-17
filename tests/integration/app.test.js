@@ -70,3 +70,15 @@ test("JWT 'lasts' parameter is used correctly.", () => {
             expect(Math.abs(now - token.exp)).toBeGreaterThan(lasts - 30) // give it some wiggle room
         })
 })
+
+test("JWT audience and issuer are both set to 'wkr-auth-mock'.", () => {
+    return request(baseUrl)
+        .post('/jwt')
+        .expect(200)
+        .expect(hasField('token'))
+        .then(res => jwt.decode(res.body.token))
+        .then(token => {
+            expect(token.aud).toBe('wkr-auth-mock')
+            expect(token.iss).toBe('wkr-auth-mock')
+        })
+})
