@@ -50,6 +50,7 @@ The service exposes several endpoints.
 Get a JWT. All provided parameters will be set in the JWT under the claims namespace provided when running the command.
 
 Method: `POST`
+
 Content Type: `application/json`
 
 Parameters:
@@ -65,3 +66,9 @@ Result:
 Status: 200, 500 (on error)
 
 - **token** *(object, optional)* The JWT. May not be set if there was an error.
+
+### `/jwks.json`
+
+The JWKS endpoint.
+
+Method: `GET`
