@@ -12,7 +12,7 @@ const argv = require('yargs')
     .demandOption(['p', 'c'])
     .help('h')
     .describe('p', 'The port to listen on.')
-    .describe('c', 'The claims namespace store custom parameters (e.g. permissions) in the JWT.')
+    .describe('c', 'The claims namespace where custom parameters (e.g. permissions) will be stored in the JWT.')
     .argv
 
 const port = argv.p
