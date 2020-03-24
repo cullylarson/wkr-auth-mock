@@ -22,23 +22,23 @@
     "wkr-auth-mock": "./app/cli.js"
   },
   "devDependencies": {
-    "eslint": "^6.1.0",
-    "eslint-plugin-jest": "^22.15.1",
-    "eslint-watch": "^6.0.0",
-    "jest": "^24.9.0",
-    "jwks-rsa": "^1.6.0",
-    "standard": "^13.1.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-watch": "^6.0.1",
+    "jest": "^25.1.0",
+    "jwks-rsa": "^1.7.0",
+    "standard": "^14.3.3",
     "supertest": "^4.0.2"
   },
   "dependencies": {
-    "@cullylarson/f": "^0.1.1",
+    "@cullylarson/f": "^0.1.2",
     "base64url": "^3.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "node-forge": "^0.8.5",
-    "node-rsa": "^1.0.5",
-    "yargs": "^13.3.0"
+    "node-forge": "^0.9.1",
+    "node-rsa": "^1.0.7",
+    "yargs": "^15.3.1"
   }
 }
