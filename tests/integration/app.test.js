@@ -38,6 +38,46 @@ test('Can get a JWT.', () => {
         })
 })
 
+test('Can get an account JWT.', () => {
+    const account = {a: 'AAA'}
+    const permissions = ['BBB']
+    const roles = ['CCC']
+    const groups = ['DDD']
+
+    return request(baseUrl)
+        .post('/account/authenticate')
+        .send({account, permissions, roles, groups})
+        .expect(200)
+        .expect(hasField('token'))
+        .then(res => jwt.decode(res.body.token))
+        .then(token => {
+            expect(token[claimsNamespace].account).toEqual(account)
+            expect(token[claimsNamespace].permissions).toEqual(permissions)
+            expect(token[claimsNamespace].roles).toEqual(roles)
+            expect(token[claimsNamespace].groups).toEqual(groups)
+        })
+})
+
+test('Can get an application JWT.', () => {
+    const application = {a: 'AAA'}
+    const permissions = ['BBB']
+    const roles = ['CCC']
+    const groups = ['DDD']
+
+    return request(baseUrl)
+        .post('/application/authenticate')
+        .send({application, permissions, roles, groups})
+        .expect(200)
+        .expect(hasField('token'))
+        .then(res => jwt.decode(res.body.token))
+        .then(token => {
+            expect(token[claimsNamespace].application).toEqual(application)
+            expect(token[claimsNamespace].permissions).toEqual(permissions)
+            expect(token[claimsNamespace].roles).toEqual(roles)
+            expect(token[claimsNamespace].groups).toEqual(groups)
+        })
+})
+
 test('JWT is valid, using the JWKS endpoint.', () => {
     return Promise.all([
         request(baseUrl)

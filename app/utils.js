@@ -93,7 +93,7 @@ const getCertificateDer = certPem => {
     return forge.util.encode64(
         forge.asn1
             .toDer(forge.pki.certificateToAsn1(forge.pki.certificateFromPem(certPem)))
-            .getBytes()
+            .getBytes(),
     )
 }
 
@@ -140,8 +140,41 @@ const signAccountJwt = (account, permissions, roles, groups, expiresIn, {
     })
 }
 
+const signApplicationJwt = (application, permissions, roles, groups, expiresIn, {
+    privateKey,
+    kid,
+    issuer,
+    audience,
+    claimsNamespace,
+}) => {
+    return new Promise((resolve, reject) => {
+        const payload = {
+            [claimsNamespace]: {
+                application,
+                permissions,
+                roles,
+                groups,
+            },
+        }
+
+        const options = {
+            algorithm: 'RS256',
+            keyid: kid,
+            issuer,
+            audience,
+            expiresIn,
+        }
+
+        sign(payload, forge.pki.privateKeyToPem(privateKey), options, (err, theJwt) => {
+            if(err) reject(err)
+            else resolve(theJwt)
+        })
+    })
+}
+
 module.exports = {
     readKeys,
     getCertAndKeys,
     signAccountJwt,
+    signApplicationJwt,
 }

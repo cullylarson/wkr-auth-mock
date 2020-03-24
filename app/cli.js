@@ -5,7 +5,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const {get} = require('@cullylarson/f')
-const {getCertAndKeys, readKeys, signAccountJwt} = require(path.join(__dirname, 'utils'))
+const {getCertAndKeys, readKeys, signAccountJwt, signApplicationJwt} = require(path.join(__dirname, 'utils'))
 
 const argv = require('yargs')
     .usage('Usage: $0 -p <num> -c <string>')
@@ -31,6 +31,28 @@ const jwksKey = {
     x5t: secrets.cert.thumbprintEncoded,
 }
 
+const handleAccountJwt = (req, res) => {
+    const account = get('account', {}, req.body)
+    const permissions = get('permissions', [], req.body)
+    const roles = get('roles', [], req.body)
+    const groups = get('groups', [], req.body)
+    const lasts = get('lasts', 3600, req.body)
+
+    signAccountJwt(account, permissions, roles, groups, lasts, {
+        privateKey: secrets.pair.priv,
+        kid: secrets.cert.kid,
+        issuer,
+        audience: issuer,
+        claimsNamespace,
+    })
+        .then(tokenJwt => res.json({token: tokenJwt}))
+        .catch(_ => {
+            res
+                .status(500)
+                .json({})
+        })
+}
+
 const app = express()
 
 app.use(cors({
@@ -40,14 +62,20 @@ app.use(cors({
 
 app.use(bodyParser.json())
 
-app.post('/jwt', (req, res) => {
-    const account = get('account', {}, req.body)
+app.post('/jwt', handleAccountJwt)
+
+// mocks the account authentication endpoint, but allows for setting own permissions
+app.post('/account/authenticate', handleAccountJwt)
+
+// mocks the application authentication endpoint, but allows for setting own permissions
+app.post('/application/authenticate', (req, res) => {
+    const application = get('application', {}, req.body)
     const permissions = get('permissions', [], req.body)
     const roles = get('roles', [], req.body)
     const groups = get('groups', [], req.body)
     const lasts = get('lasts', 3600, req.body)
 
-    signAccountJwt(account, permissions, roles, groups, lasts, {
+    signApplicationJwt(application, permissions, roles, groups, lasts, {
         privateKey: secrets.pair.priv,
         kid: secrets.cert.kid,
         issuer,
