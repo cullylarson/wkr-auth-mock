@@ -65,10 +65,10 @@ app.use(bodyParser.json())
 app.post('/jwt', handleAccountJwt)
 
 // mocks the account authentication endpoint, but allows for setting own permissions
-app.post('/account/authenticate', handleAccountJwt)
+app.post('/api/v1/account/authenticate', handleAccountJwt)
 
 // mocks the application authentication endpoint, but allows for setting own permissions
-app.post('/application/authenticate', (req, res) => {
+app.post('/api/v1/application/authenticate', (req, res) => {
     const application = get('application', {}, req.body)
     const permissions = get('permissions', [], req.body)
     const roles = get('roles', [], req.body)

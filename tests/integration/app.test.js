@@ -45,7 +45,7 @@ test('Can get an account JWT.', () => {
     const groups = ['DDD']
 
     return request(baseUrl)
-        .post('/account/authenticate')
+        .post('/api/v1/account/authenticate')
         .send({account, permissions, roles, groups})
         .expect(200)
         .expect(hasField('token'))
@@ -65,7 +65,7 @@ test('Can get an application JWT.', () => {
     const groups = ['DDD']
 
     return request(baseUrl)
-        .post('/application/authenticate')
+        .post('/api/v1/application/authenticate')
         .send({application, permissions, roles, groups})
         .expect(200)
         .expect(hasField('token'))
