@@ -90,6 +90,13 @@ app.post('/api/v1/application/authenticate', (req, res) => {
         })
 })
 
+app.get('/api/v1/.well-known/all-roles-groups', (req, res) => {
+    res.json({
+        groups: {},
+        roles: {},
+    })
+})
+
 app.get('/jwks.json', (req, res) => {
     res.json({
         keys: [

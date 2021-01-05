@@ -122,3 +122,9 @@ test("JWT audience and issuer are both set to 'wkr-auth-mock'.", () => {
             expect(token.iss).toBe('wkr-auth-mock')
         })
 })
+
+test('Can get all groups and roles.', () => {
+    return request(baseUrl)
+        .get('/api/v1/.well-known/all-roles-groups')
+        .expect(200)
+})
