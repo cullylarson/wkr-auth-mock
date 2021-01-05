@@ -1,6 +1,6 @@
 {
   "name": "wkr-auth-mock",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Kinda mocks the wkr auth service, but mostly just allows for generating JWTs and verifying them against a JWKS endpoint.",
   "scripts": {
     "start": "./app/cli.js -p 3808 -c 'asdf'",
