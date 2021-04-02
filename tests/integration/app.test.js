@@ -3,19 +3,15 @@ const jwt = require('jsonwebtoken')
 const jwksClient = require('jwks-rsa')
 const {baseUrl, hasField, claimsNamespace} = require('./utils')
 
-const getPublicKey = jwksUri => {
-    return new Promise((resolve, reject) => {
-        const client = jwksClient({
-            strictSsl: false,
-            jwksUri,
-        })
-
-        client.getSigningKeys((err, keys) => {
-            if(err) reject(err)
-            else if(!keys || !keys.length) reject(new Error('No keys found at JWKS endpoint.'))
-            else resolve(keys[0].publicKey)
-        })
+const getPublicKey = async (jwksUri) => {
+    const client = jwksClient({
+        strictSsl: false,
+        jwksUri,
     })
+
+    const keys = await client.getSigningKeys()
+    if(!keys || !keys.length) throw new Error('No keys found at JWKS endpoint.')
+    return keys[0].getPublicKey()
 }
 
 test('Can get a JWT.', () => {

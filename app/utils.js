@@ -5,6 +5,25 @@ const NodeRSA = require('node-rsa')
 const {sign} = require('jsonwebtoken')
 const base64url = require('base64url')
 
+// taken from: https://github.com/juanelas/bigint-conversion
+function bigintToBuf(num) {
+    if(num < 0) throw RangeError('Value should be a non-negative integer. Negative values are not supported.')
+
+    let hexStr = num.toString(16)
+    hexStr = !(hexStr.length % 2) ? hexStr : '0' + hexStr
+
+    return Buffer.from(hexStr, 'hex')
+}
+
+// num can be a Number, BigInt, or Buffer
+function base64UrlUIntEncode(num) {
+    const buff = Buffer.isBuffer(num)
+        ? num
+        : bigintToBuf(num)
+
+    return base64url.fromBase64(buff.toString('base64'))
+}
+
 const readKeys = (publicKeyPath, privateKeyPath) => {
     let publicKeyPem
     let privateKeyPem
@@ -173,6 +192,7 @@ const signApplicationJwt = (application, permissions, roles, groups, expiresIn, 
 }
 
 module.exports = {
+    base64UrlUIntEncode,
     readKeys,
     getCertAndKeys,
     signAccountJwt,

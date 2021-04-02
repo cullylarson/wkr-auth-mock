@@ -5,7 +5,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const {get} = require('@cullylarson/f')
-const {getCertAndKeys, readKeys, signAccountJwt, signApplicationJwt} = require(path.join(__dirname, 'utils'))
+const {getCertAndKeys, readKeys, signAccountJwt, signApplicationJwt, base64UrlUIntEncode} = require(path.join(__dirname, 'utils'))
 
 const argv = require('yargs')
     .usage('Usage: $0 -p <num> -c <string>')
@@ -25,8 +25,8 @@ const jwksKey = {
     kty: 'RSA',
     use: 'sig',
     x5c: [secrets.cert.certDer],
-    e: String(secrets.cert.exponent),
-    n: secrets.cert.modulus.toString('base64'),
+    e: base64UrlUIntEncode(secrets.cert.exponent),
+    n: base64UrlUIntEncode(secrets.cert.modulus),
     kid: secrets.cert.kid,
     x5t: secrets.cert.thumbprintEncoded,
 }
